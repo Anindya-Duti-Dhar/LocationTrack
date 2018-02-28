@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
             else {
                 location.setText("Your Location is: "+"\n"+"Latitude = " + latitude + " and"+ "\n"+"Longitude = " + longitude);
                 // insert into database
-                helper.insertIntoAllLocationDB(String.valueOf(latitude), String.valueOf(longitude), "");
+                helper.insertIntoAllLocationDB(String.valueOf(latitude), String.valueOf(longitude), "coming soon...");
             }
             // show current location in log from service
             Log.i("duti", "Your Location is: "+"\n"+"Latitude = " + latitude + " and"+ "\n"+"Longitude = " + longitude);
@@ -257,7 +257,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

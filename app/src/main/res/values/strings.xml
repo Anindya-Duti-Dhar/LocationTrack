@@ -12,5 +12,6 @@
     <string name="permission_failed">আপনার অনুমতি পাওয়া হল না!</string>
     <string name="ok">ঠিক আছে</string>
     <string name="cancel">বাতিল করুন</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
