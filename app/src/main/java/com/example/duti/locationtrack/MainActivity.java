@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -26,8 +24,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.duti.locationtrack.database.DbManager;
+import com.example.duti.locationtrack.models.AllLocation;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,12 +44,17 @@ public class MainActivity extends AppCompatActivity
     TextView location;
     LocationTracker tracker;
 
+    DbManager helper;
+    List<AllLocation> allLocationList = new ArrayList<AllLocation>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        helper = DbManager.getInstance(MainActivity.this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -75,8 +81,21 @@ public class MainActivity extends AppCompatActivity
         {
             double latitude=tracker.getLatitude();
             double longitude=tracker.getLongitude();
-            location.setText("Your Location is: "+"\n"+"Latitude = " + latitude + " and"+ "\n"+"Longitude = " + longitude);
+            if(latitude == 0.0  && latitude == 0.0){
+                location.setText("please try again to get correct location!");
+            }
+            else {
+                location.setText("Your Location is: "+"\n"+"Latitude = " + latitude + " and"+ "\n"+"Longitude = " + longitude);
+                // insert into database
+                helper.insertIntoAllLocationDB(String.valueOf(latitude), String.valueOf(longitude), "");
+            }
+            // show current location in log from service
             Log.i("duti", "Your Location is: "+"\n"+"Latitude = " + latitude + " and"+ "\n"+"Longitude = " + longitude);
+            // show list in log from database
+            allLocationList = helper.getAllLocationDataFromDB();
+            for(int i = 0; i<allLocationList.size(); i++){
+                Log.i("duti", "Old data "+(i+1)+ ": "+ allLocationList.get(i).getLatitude()+" and "+ allLocationList.get(i).getLongitude());
+            }
         }
         else
         {
