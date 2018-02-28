@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">LocationTrack</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="permission_title">কিছু অনুমতি দরকার</string>
+    <string name="permission_message">আপনার কার্যক্রম স্বাভাবিক রাখতে লোকেশন জানার অনুমতি দরকার</string>
+    <string name="permission_message_twice">পুনরায় অনুমতি বিবেচনায় সেটিংসে প্রবেশ করুন</string>
+    <string name="permission_failed">আপনার অনুমতি পাওয়া হল না!</string>
+    <string name="ok">ঠিক আছে</string>
+    <string name="cancel">বাতিল করুন</string>
+
+</resources>
