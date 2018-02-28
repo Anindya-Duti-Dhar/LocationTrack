@@ -48,7 +48,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mListMarker = helper.getAllLocationDataFromDB();
+
+        setUpMap();
+
+        // *** Focus & Zoom
+        Double Latitude = Double.parseDouble(mListMarker.get(0).getLatitude());
+        Double Longitude = Double.parseDouble(mListMarker.get(0).getLongitude());
+        LatLng coordinate = new LatLng(Latitude, Longitude);
+        googleMap.setMapType(com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 8));
+
+        // *** Marker (Loop)
         initMarker(mListMarker);
+    }
+
+    public void setUpMap(){
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.setMyLocationEnabled(true);
     }
 
     private void initMarker(List<AllLocation> listData){
