@@ -7,6 +7,14 @@ public class AllLocation {
     private String longitude;
     private String address;
 
+    public AllLocation(String latitude, String longitude, String address) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.address = address;
+    }
+
+    public AllLocation(){}
+
     public String getLatitude() {
         return latitude;
     }
