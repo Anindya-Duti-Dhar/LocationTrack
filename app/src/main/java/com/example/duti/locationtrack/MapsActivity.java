@@ -12,6 +12,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -60,22 +61,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         initMarker(mListMarker);
 
-        //focusOnMap();
-
-        final LatLng location = new LatLng(Double.parseDouble(mListMarker.get(0).getLatitude()), Double.parseDouble(mListMarker.get(0).getLongitude()));
-
-        mapLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                moveToAllMarkers(location);
-            }
-        });
+        focusOnMap();
 
     }
 
     public void setUpMap(){
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        mMap.setMyLocationEnabled(true);
+        mMap.setOnMarkerClickListener(
+                new GoogleMap.OnMarkerClickListener() {
+                    boolean doNotMoveCameraToCenterMarker = true;
+                    public boolean onMarkerClick(Marker marker) {
+                        marker.showInfoWindow(); // show info window
+                        return doNotMoveCameraToCenterMarker;
+                    }
+                });
     }
 
     private void initMarker(List<AllLocation> listData){
@@ -96,8 +95,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-
-    ////googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 8));
 
     private void moveToAllMarkers(LatLng currentLocation)
     {
